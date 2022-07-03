@@ -4,6 +4,13 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  TEMP_PATH: '${{ github.workspace }}/temp'
+  OUTPUT_PATH: '${{ github.workspace }}/output'
+  DATA_PATH: '${{ github.workspace }}/data'
+  APP_PATH: ${{ github.workspace }}
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
