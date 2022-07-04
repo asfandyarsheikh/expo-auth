@@ -24,6 +24,7 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
       - run: mkdir output
+      - run: pip install -r app/requirements.txt
       - run: python app/scripts/main.py
       - name: Push changes
         uses: cpina/github-action-push-to-another-repository@main
