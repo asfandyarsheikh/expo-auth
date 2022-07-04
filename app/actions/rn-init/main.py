@@ -12,5 +12,5 @@ if __name__ == '__main__':
     file_names = os.listdir(source_dir)
     for file_name in file_names:
         shutil.move(os.path.join(source_dir, file_name), TEMP_PATH)
-        shutil.rmtree(source_dir, ignore_errors=True)
+    shutil.rmtree(source_dir, ignore_errors=True)
 
