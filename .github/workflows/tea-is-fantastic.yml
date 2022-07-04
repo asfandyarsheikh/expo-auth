@@ -35,7 +35,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          directory: temp
+          directory: output
           repository: asfandyarsheikh/asfandyar-expo
           branch: ${{ github.ref }}
           force_with_lease: true
