@@ -8,6 +8,7 @@ env:
   OUTPUT_PATH: '${{ github.workspace }}/output'
   DATA_PATH: '${{ github.workspace }}/data'
   APP_PATH: '${{ github.workspace }}/app'
+  ANDROID_PATH: '${{ github.workspace }}/output/android'
   API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
 
 jobs:
@@ -23,9 +24,17 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip'
-      - run: mkdir output
-      - run: pip install -r app/requirements.txt
-      - run: python app/scripts/main.py
+
+      - name: Python stuff
+        - run: mkdir output
+        - run: pip install -r app/requirements.txt
+        - run: python app/scripts/main.py
+
+      - name: Build apk
+        - run: 'cd ${{ env.OUTPUT_PATH }} && npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res'
+        - run: 'cd ${{ env.ANDROID_PATH }} && ./gradlew assembleDebug'
+        - run: 'cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/app-debug.apk ${{ env.OUTPUT_PATH }}'
+
       - name: Push changes
         uses: cpina/github-action-push-to-another-repository@main
         with:
@@ -35,6 +44,22 @@ jobs:
           user-email: github-actions[bot]@users.noreply.github.
           user-name: github-actions[bot]
           target-branch: main
+        build-android:
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Build Android Release
+        run: |
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
         # uses: stefanzweifel/git-auto-commit-action@v4
         # with:
         #   repository: output
