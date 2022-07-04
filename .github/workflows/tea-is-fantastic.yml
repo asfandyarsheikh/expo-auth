@@ -8,6 +8,7 @@ env:
   OUTPUT_PATH: '${{ github.workspace }}/output'
   DATA_PATH: '${{ github.workspace }}/data'
   APP_PATH: '${{ github.workspace }}/app'
+  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
 
 jobs:
   build:
@@ -25,8 +26,6 @@ jobs:
       - run: python app/scripts/main.py
       - name: Push changes
         uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: 'output'
           destination-github-username: 'asfandyarsheikh'
