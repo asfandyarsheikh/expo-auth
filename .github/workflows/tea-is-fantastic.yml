@@ -39,9 +39,19 @@ jobs:
 
       - name: Build apk
         working-directory: ${{ env.ANDROID_PATH }}
-        run: | 
-          ./gradlew assembleDebug
-          cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/debug/app-debug.apk ${{ env.OUTPUT_PATH }}
+        run: ./gradlew assembleRelease
+          
+
+      - name: Sign apk
+        id: sign_app
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: '${{ env.ANDROID_PATH }}/app/build/outputs/apk/release'
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+
+      - run: cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/release/app-release.apk ${{ env.OUTPUT_PATH }}
 
       - name: Push changes
         uses: cpina/github-action-push-to-another-repository@main
