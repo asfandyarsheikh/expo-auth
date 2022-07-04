@@ -2,7 +2,7 @@ pre:
   - action: rn-init
     args:
       - {yaml|app|name}
-      - {env|TEMP_PATH}
+      - {env|OUTPUT_PATH}
 
 run: ~
 
