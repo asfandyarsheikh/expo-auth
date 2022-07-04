@@ -26,14 +26,16 @@ jobs:
           cache: 'pip'
 
       - name: Python stuff
-        - run: mkdir output
-        - run: pip install -r app/requirements.txt
-        - run: python app/scripts/main.py
+        run: |
+          mkdir output
+          pip install -r app/requirements.txt
+          python app/scripts/main.py
 
       - name: Build apk
-        - run: 'cd ${{ env.OUTPUT_PATH }} && npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res'
-        - run: 'cd ${{ env.ANDROID_PATH }} && ./gradlew assembleDebug'
-        - run: 'cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/app-debug.apk ${{ env.OUTPUT_PATH }}'
+        run: | 
+          cd ${{ env.OUTPUT_PATH }} && npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res
+          cd ${{ env.ANDROID_PATH }} && ./gradlew assembleDebug
+          cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/app-debug.apk ${{ env.OUTPUT_PATH }}
 
       - name: Push changes
         uses: cpina/github-action-push-to-another-repository@main
@@ -44,27 +46,3 @@ jobs:
           user-email: github-actions[bot]@users.noreply.github.
           user-name: github-actions[bot]
           target-branch: main
-        build-android:
-    needs: install-and-test
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v2
-      - name: Install npm dependencies
-        run: |
-          npm install
-      - name: Build Android Release
-        run: |
-          
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/
-        # uses: stefanzweifel/git-auto-commit-action@v4
-        # with:
-        #   repository: output
-        #   branch: output
-        #   push_options: '--force'
-        #   skip_checkout: true
-
-
