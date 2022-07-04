@@ -31,5 +31,6 @@ jobs:
           repository: temp
           branch: output
           push_options: '--force'
+          skip_checkout: true
 
 
