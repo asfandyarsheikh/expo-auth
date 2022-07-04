@@ -29,7 +29,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git branch output
+          cd temp
           git add -A
           git commit -m "Add changes" -a
       - name: Push changes
@@ -37,7 +37,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           directory: output
-          repository: asfandyarsheikh/asfandyar-expo
           branch: output
           force_with_lease: true
-          
+
