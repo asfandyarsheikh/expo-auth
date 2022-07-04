@@ -41,7 +41,7 @@ jobs:
         working-directory: ${{ env.ANDROID_PATH }}
         run: | 
           ./gradlew assembleDebug
-          cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/app-debug.apk ${{ env.OUTPUT_PATH }}
+          cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/debug/app-debug.apk ${{ env.OUTPUT_PATH }}
 
       - name: Push changes
         uses: cpina/github-action-push-to-another-repository@main
