@@ -9,7 +9,6 @@ env:
   DATA_PATH: '${{ github.workspace }}/data'
   APP_PATH: '${{ github.workspace }}/app'
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,11 +24,20 @@ jobs:
       - run: pip install -r app/requirements.txt
       - run: python app/scripts/main.py
       - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          repository: output
-          branch: output
-          push_options: '--force'
-          skip_checkout: true
+          source-directory: 'output'
+          destination-github-username: 'asfandyarsheikh'
+          destination-repository-name: 'asfandyar-expo'
+          user-email: github-actions[bot]@users.noreply.github.com
+          target-branch: main
+        # uses: stefanzweifel/git-auto-commit-action@v4
+        # with:
+        #   repository: output
+        #   branch: output
+        #   push_options: '--force'
+        #   skip_checkout: true
 
 
