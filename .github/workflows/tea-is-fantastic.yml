@@ -40,3 +40,4 @@ jobs:
           repository: asfandyarsheikh/asfandyar-expo
           branch: output
           force_with_lease: true
+          
