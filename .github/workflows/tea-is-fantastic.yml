@@ -33,4 +33,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: asfandyarsheikh/asfandyar-expo
+          branch: ${{ github.ref }}
           force_with_lease: true
