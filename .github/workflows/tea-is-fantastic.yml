@@ -31,10 +31,15 @@ jobs:
           pip install -r app/requirements.txt
           python app/scripts/main.py
 
-      - name: Build apk
+      - name: Build bundle
+        working-directory: ${{ env.OUTPUT_PATH }}
         run: | 
-          cd ${{ env.OUTPUT_PATH }} && npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res
-          cd ${{ env.ANDROID_PATH }} && ./gradlew assembleDebug
+          npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ${{ env.ANDROID_PATH }}/app/src/main/assets/index.android.bundle --assets-dest ${{ env.ANDROID_PATH }}/app/src/main/res
+
+      - name: Build apk
+        working-directory: ${{ env.ANDROID_PATH }}
+        run: | 
+          ./gradlew assembleDebug
           cp ${{ env.ANDROID_PATH }}/app/build/outputs/apk/app-debug.apk ${{ env.OUTPUT_PATH }}
 
       - name: Push changes
