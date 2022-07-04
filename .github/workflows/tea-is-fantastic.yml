@@ -27,7 +27,7 @@ jobs:
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          repository: temp
+          repository: output
           branch: output
           push_options: '--force'
           skip_checkout: true
