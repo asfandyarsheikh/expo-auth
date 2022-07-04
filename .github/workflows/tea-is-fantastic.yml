@@ -34,6 +34,7 @@ jobs:
       - name: Build bundle
         working-directory: ${{ env.OUTPUT_PATH }}
         run: | 
+          mkdir ${{ env.ANDROID_PATH }}/app/src/main/assets
           npx react-native bundle --dev false --platform android --entry-file index.js --bundle-output ${{ env.ANDROID_PATH }}/app/src/main/assets/index.android.bundle --assets-dest ${{ env.ANDROID_PATH }}/app/src/main/res
 
       - name: Build apk
