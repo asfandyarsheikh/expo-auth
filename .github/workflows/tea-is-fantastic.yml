@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -32,7 +33,8 @@ jobs:
           source-directory: 'output'
           destination-github-username: 'asfandyarsheikh'
           destination-repository-name: 'asfandyar-expo'
-          user-email: github-actions[bot]@users.noreply.github.com
+          user-email: github-actions[bot]@users.noreply.github.
+          user-name: github-actions[bot]
           target-branch: main
         # uses: stefanzweifel/git-auto-commit-action@v4
         # with:
